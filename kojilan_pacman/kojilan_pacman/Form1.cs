@@ -16,5 +16,42 @@ namespace kojilan_pacman
         {
             InitializeComponent();
         }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+    }
+
+
+
+    public class game_controller
+    {
+
+
+    }
+
+    public class pacman_map
+    {
+        private List<List<int>> rawmap;
+
+
+
+        //マップの読み込み
+        public void loadMap()
+        {
+            rawmap = new List<List<int>>();
+
+
+
+     
+
+        }
+    }
+
+    public class character
+    {
+
+    
     }
 }
