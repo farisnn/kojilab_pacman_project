@@ -41,7 +41,7 @@ namespace kojilan_pacman
         public void loadMap()
         {
             rawmap = new List<List<int>>();
-
+            //k
             //マップデータ　使うかどうかは不明 
 　　//　　　　int mapStd = {
     //    { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
