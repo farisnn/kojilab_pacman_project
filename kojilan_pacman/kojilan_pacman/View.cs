@@ -26,14 +26,14 @@ namespace kojilan_pacman
 
         }
 
-        public List<List<int>> map = new List<List<int>>();
         int x = 0;
         int y = 0;
 
-        public static void draw_map(map)
+        public static void draw_map()
         {
-            //  Bitmap関係       
-            Bitmap img1 = new Bitmap(@"C:\image\test0.png");    //道
+              List<List<int>> map = new List<List<int>>();
+        //  Bitmap関係       
+        Bitmap img1 = new Bitmap(@"C:\image\test0.png");    //道
             Bitmap img2 = new Bitmap(@"C:\image\test1.png");    //餌ありの道
             Bitmap img3 = new Bitmap(@"C:\image\test2.png");    //壁
             Bitmap img4 = new Bitmap(@"C:\image\test1.jpg");    //pacman
