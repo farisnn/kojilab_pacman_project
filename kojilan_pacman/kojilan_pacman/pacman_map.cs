@@ -12,8 +12,10 @@ namespace kojilan_pacman
         private List<List<int>> map_data;
 
         //実際の移動を示す型の宣言
-        public enum map_direction_def { up, down, left, light, stop }
+        public enum map_direction_def { up, down, left, right, stop };
 
+
+        public enum character_name { pacman,enemy1, enemy2, enemy3, enemy4};
 
         //初期座標の設定
         public Point pacman_location = new Point(0, 0);
@@ -39,6 +41,7 @@ namespace kojilan_pacman
         public int enemy2_state = 0;
         public int enemy3_state = 0;
         public int enemy4_state = 0;
+
 
         bool game_over = false;
 
@@ -90,31 +93,73 @@ namespace kojilan_pacman
 
 
 
-        public void update_map_data(character.Direction_def pacman_direction, character.Direction_def enemy1_direction, character.Direction_def enemy2_direction, character.Direction_def enemy3_direction, character.Direction_def emeny4_direction)
+        public void update_map_data(character.Direction_def pacman_direction, character.Direction_def enemy1_direction, character.Direction_def enemy2_direction, character.Direction_def enemy3_direction, character.Direction_def enemy4_direction)
         {
+            //パックマンの更新
+            if(check_direction(pacman_location, map_data, pacman_direction))
+            {
+                this.pacman_direction = convert_direction(pacman_direction);
+                move_charactor(character_name.pacman, pacman_location, pacman_direction);
+            }
+            else
+            {
+                this.pacman_direction = map_direction_def.stop;
 
-            switch (pacman_direction) {
+            }
+            //enemy1の更新
+            if (check_direction(enemy1_location, map_data, enemy1_direction))
+            {
+                this.enemy1_direction = convert_direction(enemy1_direction);
+                move_charactor(character_name.enemy1, enemy1_location, enemy1_direction);
+            }
+            else
+            {
+                this.enemy1_direction = map_direction_def.stop;
 
-                case character.Direction_def.up:
-                    //TODO ここにはupの時のロジックを書く
-                    break;
-                case character.Direction_def.down:
-                    //TODO ここにdownの時のロジックを書く
-                    break;
-                case character.Direction_def.left:
-                    //TODO ここにleftの時のロジックを書く
-                    break;
-                case character.Direction_def.right:
-                    //TODO ここにrightの時のロジックを書く
-                    break;
-                default:
-                    //ここに来るときはエラー以外無し
-                    break;
+            }
+            //enemy2の更新
+            if (check_direction(enemy2_location, map_data, enemy2_direction))
+            {
+                this.enemy2_direction = convert_direction(enemy2_direction);
+                move_charactor(character_name.enemy2, enemy2_location, enemy2_direction);
+            }
+            else
+            {
+                this.enemy2_direction = map_direction_def.stop;
+
+            }
+            //enemy3の更新
+            if (check_direction(enemy3_location, map_data, enemy3_direction))
+            {
+                this.enemy3_direction = convert_direction(enemy3_direction);
+                move_charactor(character_name.enemy3, enemy3_location, enemy3_direction);
+            }
+            else
+            {
+                this.enemy3_direction = map_direction_def.stop;
+
+            }
+            //enemy4の更新
+            if (check_direction(pacman_location, map_data, pacman_direction))
+            {
+                this.enemy4_direction = convert_direction(enemy4_direction);
+                move_charactor(character_name.enemy4, enemy4_location, enemy4_direction);
+            }
+            else
+            {
+                this.enemy4_direction = map_direction_def.stop;
+
             }
 
-
             //TODO ここに座標の重なり判定を書く
-            
+
+
+
+
+
+
+
+
 
 
 
@@ -125,6 +170,127 @@ namespace kojilan_pacman
                 game_over = true;
              
         }
+
+
+        /// <summary>
+        /// その方向に進めるかどうかを判定するメソッド
+        /// </summary>
+        /// <param name="point">現在の座標</param>
+        /// <param name="map"></param>
+        /// <param name="direction"></param>
+        /// <returns></returns>
+        private bool check_direction(Point point, List<List<int>> map, character.Direction_def direction)
+        {
+            int next_expect_position_status=9;
+            switch(direction) {
+
+                case character.Direction_def.up:
+
+                    next_expect_position_status = map[point.X][point.Y -1];
+
+                    break;
+                case character.Direction_def.down:
+                    next_expect_position_status = map[point.X][point.Y + 1];
+                    break;
+                case character.Direction_def.left:
+                    next_expect_position_status = map[point.X-1][point.Y];
+
+                    break;
+                case character.Direction_def.right:
+                    next_expect_position_status = map[point.X+1][point.Y];
+                    break;
+                default:
+                    
+                    break;
+            }
+
+            if (next_expect_position_status == 2)
+            {
+
+                return false;
+            }
+            else if (next_expect_position_status == 9)
+            {
+                Console.WriteLine("エラーですよ");
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+
+        }
+
+       
+
+        /// <summary>
+        /// 実際にキャラクターの座標を変更するメソッド
+        /// </summary>
+        /// <param name="name">キャラクター名</param>
+        /// <param name="now_position">キャラクターの現在の位置</param>
+        /// <param name="direction">キャラクターが指定した移動の方向</param>
+        private void move_charactor(character_name name, Point now_position, character.Direction_def direction)
+        {
+            Point next_point=now_position;
+
+
+            switch (direction)
+            {
+                case character.Direction_def.up:
+                    next_point.Y--;
+                    break;
+
+                case character.Direction_def.down:
+                    next_point.Y++;
+                    break;
+                case character.Direction_def.left:
+                    next_point.X--;
+                    break;
+                case character.Direction_def.right:
+                    next_point.X++;
+                    break;
+                    
+            }
+
+            switch (name)
+            {
+                case character_name.pacman:
+                    pacman_location = next_point;
+                    break;
+                case character_name.enemy1:
+                    enemy1_location = next_point;
+                    break;
+                case character_name.enemy2:
+                    enemy2_location = next_point;
+                    break;
+                case character_name.enemy3:
+                    enemy3_location = next_point;
+                    break;
+                case character_name.enemy4:
+                    enemy4_location = next_point;
+                    break;
+            }
+        }
+
+
+       private map_direction_def convert_direction(character.Direction_def chara_def)
+        {
+            switch (chara_def)
+            {
+                case character.Direction_def.up:
+                    return map_direction_def.up;
+                case character.Direction_def.down:
+                    return map_direction_def.down;
+                case character.Direction_def.left:
+                    return map_direction_def.left;
+                case character.Direction_def.right:
+                    return map_direction_def.right;
+                   
+            }
+            return map_direction_def.stop;
+
+        }
+
 
 
 
@@ -162,33 +328,8 @@ namespace kojilan_pacman
         //マップの読み込み
         public void loadMap()
         {
-            rawmap = new List<List<int>>();
-           // int map[][]
-        //マップデータ　使うかどうかは不明 
-        int [,] map = new int [,]{
-                { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-                { 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2 },
-                { 2, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2 },
-                { 2, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2 },
-                { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 },
-                { 2, 1, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2 },
-                { 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 2 },
-                { 2, 2, 2, 2, 1, 2, 2, 2, 0, 2, 0, 2, 2, 2, 1, 2, 2, 2, 2 },
-                { 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0 },
-                { 2, 2, 2, 2, 1, 2, 0, 2, 2, 0, 2, 2, 0, 2, 1, 2, 2, 2, 2 },
-                { 0, 0, 0, 0, 1, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1, 0, 0, 0, 0 },
-                { 2, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 0, 2, 1, 2, 2, 2, 2 },
-                { 0, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 0 },
-                { 2, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 0, 2, 1, 2, 2, 2, 2 },
-                { 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2 },
-                { 2, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2 },
-                { 2, 1, 1, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 2 },
-                { 2, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 1, 2, 2 },
-                { 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 2 },
-                { 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2 },
-                { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 },
-                { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 },
-            };
+           
+            }
 
 
 
@@ -206,7 +347,7 @@ namespace kojilan_pacman
             //        elDraw::Layer(x * 32, y * 32, chip, map[y][x] * 32, 0, map[y][x] * 32 + 32, 32);
             //    }
             //}
-        }
+        
     }
 }
 
