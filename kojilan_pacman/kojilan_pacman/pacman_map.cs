@@ -7,7 +7,7 @@ using System.Drawing;
 
 namespace kojilan_pacman
 {
-    class pacman_map
+    public class pacman_map
     {
         private List<List<int>> map_data;
 
@@ -18,34 +18,198 @@ namespace kojilan_pacman
         public enum character_name { pacman,enemy1, enemy2, enemy3, enemy4};
 
         //初期座標の設定
-        public Point pacman_location = new Point(0, 0);
-        public Point enemy1_location = new Point(0, 0);
-        public Point enemy2_location = new Point(0, 0);
-        public Point enemy3_location = new Point(0, 0);
-        public Point enemy4_location = new Point(0, 0);
+        private Point pacman_location = new Point(0, 0);
+        private Point enemy1_location = new Point(0, 0);
+        private Point enemy2_location = new Point(0, 0);
+        private Point enemy3_location = new Point(0, 0);
+        private Point enemy4_location = new Point(0, 0);
 
 
 
         /// <summary>
         /// キャラクターの移動した方向を示す変数とその初期値（取りあえずstop）
         /// </summary>
-        public map_direction_def pacman_direction = map_direction_def.stop;
-        public map_direction_def enemy1_direction = map_direction_def.stop;
-        public map_direction_def enemy2_direction = map_direction_def.stop;
-        public map_direction_def enemy3_direction = map_direction_def.stop;
-        public map_direction_def enemy4_direction = map_direction_def.stop;
-        
-        public int player_score = 0;
-        public int rest_turn = 100;
-        public int enemy1_state = 0;
-        public int enemy2_state = 0;
-        public int enemy3_state = 0;
-        public int enemy4_state = 0;
+        private map_direction_def pacman_direction = map_direction_def.stop;
+        private map_direction_def enemy1_direction = map_direction_def.stop;
+        private map_direction_def enemy2_direction = map_direction_def.stop;
+        private map_direction_def enemy3_direction = map_direction_def.stop;
+        private map_direction_def enemy4_direction = map_direction_def.stop;
+
+        private int player_score = 0;
+        private int rest_turn = 100;
+        private int enemy1_state = 0;
+        private int enemy2_state = 0;
+        private int enemy3_state = 0;
+        private int enemy4_state = 0;
 
 
         bool game_over = false;
 
 
+        //ここら辺で変数を取れるアクセサを定義してます。
+        public Point Enemy1_location
+        {
+            get
+            {
+                return enemy1_location;
+            }
+           
+        }
+
+        public Point Enemy2_location
+        {
+            get
+            {
+                return enemy2_location;
+            }
+
+        }
+
+        public Point Enemy3_location
+        {
+            get
+            {
+                return enemy3_location;
+            }
+
+          
+        }
+
+        public Point Enemy4_location
+        {
+            get
+            {
+                return enemy4_location;
+            }
+
+            
+        }
+
+       
+        public map_direction_def Pacman_direction
+        {
+            get
+            {
+                return pacman_direction;
+            }
+
+           
+        }
+
+        public map_direction_def Enemy1_direction
+        {
+            get
+            {
+                return enemy1_direction;
+            }
+
+        }
+
+        public map_direction_def Enemy2_direction
+        {
+            get
+            {
+                return enemy2_direction;
+            }
+
+            
+        }
+
+        public map_direction_def Enemy3_direction
+        {
+            get
+            {
+                return enemy3_direction;
+            }
+
+          
+        }
+
+        public map_direction_def Enemy4_direction
+        {
+            get
+            {
+                return enemy4_direction;
+            }
+
+        }
+
+        public int Enemy1_state
+        {
+            get
+            {
+                return enemy1_state;
+            }
+
+           
+        }
+
+        public int Enemy2_state
+        {
+            get
+            {
+                return enemy2_state;
+            }
+            
+        }
+
+        public int Enemy3_state
+        {
+            get
+            {
+                return enemy3_state;
+            }
+            
+        }
+
+        public int Enemy4_state
+        {
+            get
+            {
+                return enemy4_state;
+            }
+
+        }
+
+        public int Rest_turn
+        {
+            get
+            {
+                return rest_turn;
+            }
+        }
+
+        /// <summary>
+        /// 現在のマップのデータを返す関数
+        /// </summary>
+        /// <returns>マップデータ（リストのリスト）</returns>
+        public List<List<int>> get_map_data()
+        {
+            return map_data;
+        }
+
+
+
+        /// <summary>
+        /// ゲームオーバーの判定を返す。
+        /// </summary>
+        /// <returns>game_overの値(bool)</returns>
+        public bool check_finish()
+        {
+            return game_over;
+        }
+
+
+        /// <summary>
+        /// 今のところスコアだけ返す関数
+        /// </summary>
+        /// <returns>player_scoreの値</returns>
+        public int announce_score()
+        {
+
+            return player_score;
+
+        }
 
         /// <summary>
         /// コンストラクタ。一応マップの定義はここでやってる
@@ -81,14 +245,6 @@ namespace kojilan_pacman
 
         }
 
-        /// <summary>
-        /// 現在のマップのデータを返す関数
-        /// </summary>
-        /// <returns>マップデータ（リストのリスト）</returns>
-        public List<List<int>> get_map_data()
-        {
-            return map_data;
-        }
 
 
 
@@ -151,13 +307,59 @@ namespace kojilan_pacman
 
             }
 
+
+
+
+
+
             //TODO ここに座標の重なり判定を書く
 
 
+            if (pacman_location.Equals(enemy1_location))
+            {
+                //enemy1とヒットしたときの処理
+                if (enemy1_state == 0)
+                    game_over = true;
+                else
+                {
 
 
+                    //敵の場所を戻す
+                    //スコアをなんとかする
+                    //ステートを0にする
+                }
 
+            }
+            if (pacman_location.Equals(enemy2_location))
+            {
 
+                //enemy2とヒットしたときの処理
+                if (enemy2_state == 0)
+                    game_over = true;
+
+            }
+            if (pacman_location.Equals(enemy3_location))
+            {
+                //enemy3とヒットした時の処理
+
+                if (enemy3_state == 0)
+                    game_over = true;
+
+            }
+            if (pacman_location.Equals(enemy4_location))
+            {
+
+                //enemy4とヒットした時の処理
+                if (enemy4_state == 0)
+                    game_over = true;
+
+            }
+
+// 3.移動後のパックマンの座標にアイテムがあった場合→player_scoreに加算
+// 4.パワー餌があった場合→敵キャラの全員のenemy_stateを設定
+//3.マップデータの書き換え(2の中で必要なタイミングでする感じかな)
+
+//1.マップの状態を更新
 
 
 
@@ -296,26 +498,6 @@ namespace kojilan_pacman
 
 
 
-        /// <summary>
-        /// ゲームオーバーの判定を返す。
-        /// </summary>
-        /// <returns>game_overの値(bool)</returns>
-        public bool check_finish()
-        {
-            return game_over;
-        }
-
-
-        /// <summary>
-        /// 今のところスコアだけ返す関数
-        /// </summary>
-        /// <returns>player_scoreの値</returns>
-        public int announcre_score()
-        {
-
-            return player_score;
-
-        }
 
 
 

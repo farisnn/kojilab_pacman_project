@@ -27,7 +27,7 @@ namespace kojilan_pacman
         /// マップなどを入れて進行方向を変えす関数
         /// </summary>
         /// <returns>次の進行方向</returns>
-        public abstract Direction_def move(List<List<int>> map, Point position);
+        public abstract Direction_def move(pacman_map map);
         
 
             //列挙型をこんな風に使う。（一応こうやって移動方向を指定すれば良いのではないかという例）
@@ -73,7 +73,7 @@ namespace kojilan_pacman
 
         public pacman()
         {
-
+           
 
             
         }
@@ -83,10 +83,12 @@ namespace kojilan_pacman
 /// <param name="map">マップの二次元配列</param>
 /// <param name="position">パックマンとかの位置？</param>
 /// <returns></returns>
-        public override Direction_def move(List<List<int>> map, Point position)
+        public override Direction_def move(pacman_map map)
         {
 
-            
+         
+
+
 
             return Direction_def.left;
         }
@@ -107,16 +109,10 @@ namespace kojilan_pacman
         /// enemy1の移動方向
         /// </summary>
         /// <returns>次の方向</returns>
-        public override Direction_def move(List<List<int>> map, Point position)
+        public override Direction_def move(pacman_map map)
         {
             
 
-           /*なんとなくアルゴリズム考える
-            *上下の座標を引いて、一番差分の大きい方へ移動
-            * 
-            * 
-            *
-           */
 
             return Direction_def.left;
         }
@@ -132,7 +128,7 @@ namespace kojilan_pacman
         ///探索してみる？
         /// </summary>
         /// <returns>次の方向</returns>
-        public override Direction_def move(List<List<int>> map, Point position)
+        public override Direction_def move(pacman_map map)
         {
 
 
@@ -150,7 +146,7 @@ namespace kojilan_pacman
         /// enemy1の移動方向
         /// </summary>
         /// <returns>次の方向</returns>
-        public override Direction_def move(List<List<int>> map, Point position)
+        public override Direction_def move(pacman_map map)
         {
 
 
@@ -166,7 +162,7 @@ namespace kojilan_pacman
         /// enemy1の移動方向
         /// </summary>
         /// <returns>次の方向</returns>
-        public override Direction_def move(List<List<int>> map, Point position)
+        public override Direction_def move(pacman_map map)
         {
 
 
