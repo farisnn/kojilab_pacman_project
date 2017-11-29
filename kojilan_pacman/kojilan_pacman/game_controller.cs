@@ -10,7 +10,7 @@ namespace kojilan_pacman
     {
         //インスタンスを代入する変数
         pacman_map map;
-        View view;
+        Form1 form1;
         pacman pacman;
         enemy1 enemy1;
         enemy2 enemy2;
@@ -22,10 +22,10 @@ namespace kojilan_pacman
         public Direction after_direction;
         public bool finish_game = false; 
 
-            Game_controller(pacman_map Map,View View, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
+            Game_controller(pacman_map Map,Form1 Form1, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
         {
             map = Map;
-            view = View;
+            form1 = Form1;
             pacman = Pacman;
             enemy1 = Enemy1;
             enemy2 = Enemy2;
@@ -37,7 +37,7 @@ namespace kojilan_pacman
         
         public void load_initial_state()//初期画面を描画するメソッド
         {
-            view.draw_map(map);
+            form1.draw_map(map);
         }
 
 
@@ -47,21 +47,21 @@ namespace kojilan_pacman
 
             //ゲーム終了まではwhileをループ
             while (finish_game != true) {
-                List<Direction> all_direction = new List<Direction>();//キャラの動く方向を格納するリスト
+                List<character.Direction_def> all_direction = new List<character.Direction_def>();//キャラの動く方向を格納するリスト
 
                 //各キャラの動きをリストに追加
-                all_direction.Add(pacman.move);
-                all_direction.Add(enemy1.move);
-                all_direction.Add(enemy2.move);
-                all_direction.Add(enemy3.move);
-                all_direction.Add(enemy4.move);
+                all_direction.Add(pacman.move(map));
+                all_direction.Add(enemy1.move(map));
+                all_direction.Add(enemy2.move(map));
+                all_direction.Add(enemy3.move(map));
+                all_direction.Add(enemy4.move(map));
 
                 //キャラの動きをマップクラスに渡して、マップデータを更新してもらう.
                 pacman_map.update_map_data(all_direction);
 
 
                 //更新したマップデータに基づいて、画面上に描画
-                view.draw_map(map);
+                form1.draw_map(map);
 
                 //ゲーム終了の判定（マップ更新時の戻り値でもらっといてもいい）
                 finish_game = map.check_finish();//終了しなければfalseのまま
