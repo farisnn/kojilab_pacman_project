@@ -21,7 +21,7 @@ namespace kojilan_pacman
         public enum Direction { up, down, left, right };
         public Direction after_direction;
         public bool finish_game = false; 
-
+        
             Game_controller(pacman_map Map,View View, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
         {
             map = Map;
@@ -33,11 +33,11 @@ namespace kojilan_pacman
             enemy4 = Enemy4;
         }
 
-        //ほかのインスタンスのメソッドを使うメソッドを切りがいいように作成していく。返り値はbooleanとかにしてmainで判定かな？
-        
+        ほかのインスタンスのメソッドを使うメソッドを切りがいいように作成していく。返り値はbooleanとかにしてmainで判定かな？
+
         public void load_initial_state()//初期画面を描画するメソッド
         {
-            view.draw_map(map);
+            draw_map(map);
         }
 
 
@@ -46,7 +46,8 @@ namespace kojilan_pacman
         {
 
             //ゲーム終了まではwhileをループ
-            while (finish_game != true) {
+            while (finish_game != true)
+            {
                 List<Direction> all_direction = new List<Direction>();//キャラの動く方向を格納するリスト
 
                 //各キャラの動きをリストに追加
@@ -61,11 +62,11 @@ namespace kojilan_pacman
 
 
                 //更新したマップデータに基づいて、画面上に描画
-                view.draw_map(map);
+                Form1.draw_map(map);
 
-                //ゲーム終了の判定（マップ更新時の戻り値でもらっといてもいい）
+                //ゲーム終了のs判定（マップ更新時の戻り値でもらっといてもいい）
                 finish_game = map.check_finish();//終了しなければfalseのまま
-        }
+            }
 
             //ゲーム終了時：スコアを通知してゲーム終了
             map.announce_score();
