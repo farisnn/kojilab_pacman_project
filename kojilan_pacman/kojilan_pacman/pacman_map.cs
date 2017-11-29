@@ -400,15 +400,15 @@ namespace kojilan_pacman
             // 4.パワー餌があった場合→敵キャラの全員のenemy_stateを設定
 
             //パックマンがエサを食べる処理
-            if (map_data[pacman_location.X][pacman_location.Y] == 1)
+            if (map_data[pacman_location.Y][pacman_location.X] == 1)
             {
 
                 player_score += food_score;//スコアの加算適当に10
-                map_data[pacman_location.X][pacman_location.Y] = 0;
+                map_data[pacman_location.Y][pacman_location.X] = 0;
 
             }
             //パワーエサを食べる処理
-            else if (map_data[pacman_location.X][pacman_location.Y] == 1)
+            else if (map_data[pacman_location.Y][pacman_location.X] == 1)
             {
 
                 player_score += power_food_score;//スコアの加算適当に10
@@ -446,18 +446,18 @@ namespace kojilan_pacman
 
                 case character.Direction_def.up:
 
-                    next_expect_position_status = map[point.X][point.Y -1];
+                    next_expect_position_status = map[point.Y -1][point.X];
 
                     break;
                 case character.Direction_def.down:
-                    next_expect_position_status = map[point.X][point.Y + 1];
+                    next_expect_position_status = map[point.Y + 1][point.X];
                     break;
                 case character.Direction_def.left:
-                    next_expect_position_status = map[point.X-1][point.Y];
+                    next_expect_position_status = map[point.Y][point.X - 1];
 
                     break;
                 case character.Direction_def.right:
-                    next_expect_position_status = map[point.X+1][point.Y];
+                    next_expect_position_status = map[point.Y][point.X+1];
                     break;
                 default:
                     
@@ -497,17 +497,17 @@ namespace kojilan_pacman
             switch (direction)
             {
                 case character.Direction_def.up:
-                    next_point.Y--;
+                    next_point.X--;
                     break;
 
                 case character.Direction_def.down:
-                    next_point.Y++;
+                    next_point.X++;
                     break;
                 case character.Direction_def.left:
-                    next_point.X--;
+                    next_point.Y--;
                     break;
                 case character.Direction_def.right:
-                    next_point.X++;
+                    next_point.Y++;
                     break;
                     
             }
