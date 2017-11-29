@@ -18,11 +18,11 @@ namespace kojilan_pacman
         public enum character_name { pacman,enemy1, enemy2, enemy3, enemy4};
 
         //初期座標の設定
-        private Point pacman_location = new Point(0, 0);
-        private Point enemy1_location = new Point(0, 0);
-        private Point enemy2_location = new Point(0, 0);
-        private Point enemy3_location = new Point(0, 0);
-        private Point enemy4_location = new Point(0, 0);
+        private Point pacman_location = new Point(9, 20);
+        private Point enemy1_location = new Point(9, 10);
+        private Point enemy2_location = new Point(9, 10);
+        private Point enemy3_location = new Point(9, 10);
+        private Point enemy4_location = new Point(9, 10);
 
 
 
@@ -45,8 +45,19 @@ namespace kojilan_pacman
 
         bool game_over = false;
 
+        //定数関連
+        private const int power_food_score = 100;//パワーエサ食べたときのスコア
+        private const int food_score = 10;//ノーマルエサを食べた時のスコア
+        private const int enemy_eat_score = 200;//敵を食べた時のスコア
+        private const int state_dutation = 5;//敵の弱体ターン数
+
 
         //ここら辺で変数を取れるアクセサを定義してます。
+
+
+        public Point Pacman_location {
+            get => pacman_location;
+        }
         public Point Enemy1_location
         {
             get
@@ -178,6 +189,8 @@ namespace kojilan_pacman
                 return rest_turn;
             }
         }
+
+
 
         /// <summary>
         /// 現在のマップのデータを返す関数
@@ -322,11 +335,10 @@ namespace kojilan_pacman
                     game_over = true;
                 else
                 {
-
-
-                    //敵の場所を戻す
-                    //スコアをなんとかする
-                    //ステートを0にする
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
                 }
 
             }
@@ -337,6 +349,14 @@ namespace kojilan_pacman
                 if (enemy2_state == 0)
                     game_over = true;
 
+                else
+                {
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
+                }
+
             }
             if (pacman_location.Equals(enemy3_location))
             {
@@ -344,6 +364,13 @@ namespace kojilan_pacman
 
                 if (enemy3_state == 0)
                     game_over = true;
+                else
+                {
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
+                }
 
             }
             if (pacman_location.Equals(enemy4_location))
@@ -352,19 +379,44 @@ namespace kojilan_pacman
                 //enemy4とヒットした時の処理
                 if (enemy4_state == 0)
                     game_over = true;
+                else
+                {
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
+                }
 
             }
 
-// 3.移動後のパックマンの座標にアイテムがあった場合→player_scoreに加算
-// 4.パワー餌があった場合→敵キャラの全員のenemy_stateを設定
-//3.マップデータの書き換え(2の中で必要なタイミングでする感じかな)
 
-//1.マップの状態を更新
+            // 3.移動後のパックマンの座標にアイテムがあった場合→player_scoreに加算
+            // 4.パワー餌があった場合→敵キャラの全員のenemy_stateを設定
 
+            //パックマンがエサを食べる処理
+            if (map_data[pacman_location.X][pacman_location.Y] == 1)
+            {
 
+                player_score += food_score;//スコアの加算適当に10
+                map_data[pacman_location.X][pacman_location.Y] = 0;
 
+            }
+            //パワーエサを食べる処理
+            else if (map_data[pacman_location.X][pacman_location.Y] == 1)
+            {
 
+                player_score += power_food_score;//スコアの加算適当に10
+                //敵の状態の変更
+                enemy1_state = state_dutation;
+                enemy2_state = state_dutation;
+                enemy3_state = state_dutation;
+                enemy4_state = state_dutation;
+                //マップの書き換え
+                map_data[pacman_location.X][pacman_location.Y] = 0;
 
+            }
+
+            
             //残りターンを減らす。そして0になったらゲームオーバ－フラグをtrue
 
             rest_turn--;
