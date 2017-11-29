@@ -18,8 +18,8 @@ namespace kojilan_pacman
         public enum character_name { pacman,enemy1, enemy2, enemy3, enemy4};
 
         //初期座標の設定
-        private Point pacman_location = new Point(9, 20);
-        private Point enemy1_location = new Point(9, 10);
+        private Point pacman_location = new Point(9, 16);
+        private Point enemy1_location = new Point(9, 8);
         private Point enemy2_location = new Point(9, 10);
         private Point enemy3_location = new Point(9, 10);
         private Point enemy4_location = new Point(9, 10);
@@ -315,7 +315,7 @@ namespace kojilan_pacman
 
             }
             //enemy4の更新
-            if (check_direction(pacman_location, map_data, pacman_direction))
+            if (check_direction(enemy4_location, map_data, pacman_direction))
             {
                 this.enemy4_direction = convert_direction(enemy4_direction);
                 move_charactor(character_name.enemy4, enemy4_location, enemy4_direction);

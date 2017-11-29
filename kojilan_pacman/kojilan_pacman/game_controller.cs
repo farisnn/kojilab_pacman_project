@@ -48,7 +48,7 @@ namespace kojilan_pacman
             //ゲーム終了まではwhileをループ
             while (finish_game != true) {
                 List<character.Direction_def> all_direction = new List<character.Direction_def>();//キャラの動く方向を格納するリスト
-
+                load_initial_state();
                 //各キャラの動きをリストに追加
                 all_direction.Add(pacman.move(map));
                 all_direction.Add(enemy1.move(map));
