@@ -48,6 +48,8 @@ namespace kojilan_pacman
         private int state2;
         private int state3;
         private int state4;
+        private int score;
+        private bool cheak;
         public void draw_map(pacman_map map_data)
         {
 
@@ -61,7 +63,9 @@ namespace kojilan_pacman
             this.state2 = map_data.Enemy2_state;
             this.state3 = map_data.Enemy3_state;
             this.state4 = map_data.Enemy4_state;
-
+            this.time = map_data.Rest_turn;
+            this.cheak = map_data.check_finish();
+            this.score = map_data.announce_score();
             Bitmap img1 = new Bitmap(@"C:\image\test0.png");    //道
             Bitmap img2 = new Bitmap(@"C:\image\test1.png");    //餌ありの道
             Bitmap img3 = new Bitmap(@"C:\image\test2.png");    //壁
@@ -106,6 +110,11 @@ namespace kojilan_pacman
 
         }
         private void button1_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

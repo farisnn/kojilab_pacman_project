@@ -55,8 +55,12 @@ namespace kojilan_pacman
         //ここら辺で変数を取れるアクセサを定義してます。
 
 
-        public Point Pacman_location {
-            get => pacman_location;
+        public Point Pacman_location
+        {
+            get
+            {
+               return pacman_location;
+            }
         }
         public Point Enemy1_location
         {
