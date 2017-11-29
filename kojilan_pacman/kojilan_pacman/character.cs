@@ -90,7 +90,7 @@ namespace kojilan_pacman
 
 
 
-            return Direction_def.left;
+            return Direction_def.right;
         }
 
 
@@ -232,7 +232,7 @@ namespace kojilan_pacman
             }
 
             //次に進む座標から、進むべき方向を取得
-            Point next_direction = new Point(own_point.X - short_path[short_path.Count - 1].X, own_point.Y - short_path[short_path.Count - 1].Y);//short_pathの末尾が次に進むべき座標
+            Point next_direction = new Point(own_point.X - short_path[short_path.Count - 2].X, own_point.Y - short_path[short_path.Count - 2].Y);//short_pathの末尾が次に進むべき座標
             if (next_direction.Y == 1)
             {
                 return_direction = Direction_def.up;
@@ -270,27 +270,28 @@ namespace kojilan_pacman
             List<Direction_def> direction_list = new List<Direction_def>();//進行方向の優先順位を決める
 
 
-            switch (current_direction)//目の前の座標の取得と、進行方向と逆向きの取得
+            switch (map.Enemy1_direction)//目の前の座標の取得と、進行方向と逆向きの取得
             {
-                case Direction_def.up:
+                case pacman_map.map_direction_def.stop:
+                case pacman_map.map_direction_def.up:
                     infront_location.Y++;
                     reverse_direction = Direction_def.down;
                     own_left = new Point(map.Enemy1_location.X-1,map.Enemy1_location.Y);
                     own_right = new Point(map.Enemy1_location.X+1,map.Enemy1_location.Y);
                     break;
-                case Direction_def.down:
+                case pacman_map.map_direction_def.down:
                     infront_location.Y--;
                     reverse_direction = Direction_def.up;
                     own_left = new Point(map.Enemy1_location.X +1, map.Enemy1_location.Y);
                     own_right = new Point(map.Enemy1_location.X - 1, map.Enemy1_location.Y);
                     break;
-                case Direction_def.right:
+                case pacman_map.map_direction_def.right:
                     infront_location.X++;
                     reverse_direction = Direction_def.left;
                     own_left = new Point(map.Enemy1_location.X, map.Enemy1_location.Y-1);
                     own_right = new Point(map.Enemy1_location.X, map.Enemy1_location.Y+1);
                     break;
-                case Direction_def.left:
+                case pacman_map.map_direction_def.left:
                     infront_location.X--;
                     reverse_direction = Direction_def.right;
                     own_left = new Point(map.Enemy1_location.X , map.Enemy1_location.Y+1);
@@ -473,6 +474,7 @@ namespace kojilan_pacman
             }
             else//曲がれるとこがない場合
             {
+
                 return_direction = current_direction;//直進
             }
         

@@ -19,7 +19,7 @@ namespace kojilan_pacman
 
         //初期座標の設定
         private Point pacman_location = new Point(9, 16);
-        private Point enemy1_location = new Point(9, 8);
+        private Point enemy1_location = new Point(9, 10);
         private Point enemy2_location = new Point(9, 10);
         private Point enemy3_location = new Point(9, 10);
         private Point enemy4_location = new Point(9, 10);

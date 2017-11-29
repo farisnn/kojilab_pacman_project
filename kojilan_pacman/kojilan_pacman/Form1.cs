@@ -102,7 +102,7 @@ namespace kojilan_pacman
                     }
                 }
             }
-            label1.Text =score.ToString();
+            label2.Text =score.ToString();
             label4.Text = time.ToString();
             DrawImage(pacman, 25 * pacman_location.X, 25 * pacman_location.Y);
             DrawImage(bule, 25 * enemy1_location.X, 25 * enemy1_location.Y);
