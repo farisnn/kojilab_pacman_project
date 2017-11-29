@@ -163,7 +163,7 @@ namespace kojilan_pacman
                 if (map.get_map_data()[check_point.Y - 1][check_point.X] != 2)
                 {
                     point_exist = false;
-                    Point current_point = new Point(check_point.X, check_point.Y + 1);//子ノードの自分の座標
+                    Point current_point = new Point(check_point.X, check_point.Y - 1 );//子ノードの自分の座標
                     foreach (point_info i in checked_list)//がぶっているかをチェック。
                     {
                         if (i.current_point == current_point)
