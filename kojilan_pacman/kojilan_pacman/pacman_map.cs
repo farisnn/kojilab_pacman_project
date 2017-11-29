@@ -258,7 +258,7 @@ namespace kojilan_pacman
             map_data.Add(new List<int>() { 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-
+            //とあるミスでここにアクセスするときだけYXの流れ。
 
 
 
@@ -418,7 +418,7 @@ namespace kojilan_pacman
                 enemy3_state = state_dutation;
                 enemy4_state = state_dutation;
                 //マップの書き換え
-                map_data[pacman_location.X][pacman_location.Y] = 0;
+                map_data[pacman_location.Y][pacman_location.X] = 0;
 
             }
 
@@ -497,17 +497,17 @@ namespace kojilan_pacman
             switch (direction)
             {
                 case character.Direction_def.up:
-                    next_point.X--;
+                    next_point.Y--;
                     break;
 
                 case character.Direction_def.down:
-                    next_point.X++;
+                    next_point.Y++;
                     break;
                 case character.Direction_def.left:
-                    next_point.Y--;
+                    next_point.X--;
                     break;
                 case character.Direction_def.right:
-                    next_point.Y++;
+                    next_point.X++;
                     break;
                     
             }
