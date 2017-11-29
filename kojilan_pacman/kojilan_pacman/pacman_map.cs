@@ -42,7 +42,7 @@ namespace kojilan_pacman
         private int enemy3_state = 0;
         private int enemy4_state = 0;
 
-
+        
         bool game_over = false;
 
 
