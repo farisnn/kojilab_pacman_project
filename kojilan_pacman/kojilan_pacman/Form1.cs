@@ -11,13 +11,14 @@ using System.Drawing;
 
 namespace kojilan_pacman
 {
-    //public Form1()
-    //{
-    //    InitializeComponent();
-    //}
+    
 
     public partial class Form1 : Form
     {
+        public Form1()
+        {
+            InitializeComponent();
+        }
         private List<List<int>> map = new List<List<int>>();
 
         private void DrawImage(Image prm_img, int x, int y)
@@ -111,7 +112,9 @@ namespace kojilan_pacman
         }
         private void button1_Click(object sender, EventArgs e)
         {
+            Game_controller game = new Game_controller(new pacman_map(),this , new pacman(), new enemy1(), new enemy2(), new enemy3 (),new enemy4 ());
 
+            game.start_game();
         }
 
         private void label1_Click(object sender, EventArgs e)

@@ -80,6 +80,8 @@ namespace kojilan_pacman
 
         }
 
+
+
         public Point Enemy3_location
         {
             get
@@ -231,7 +233,7 @@ namespace kojilan_pacman
         /// <summary>
         /// コンストラクタ。一応マップの定義はここでやってる
         /// </summary>
-        pacman_map()
+     public pacman_map()
         {
             map_data = new List<List<int>>();
             map_data.Add(new List<int>() { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });

@@ -22,7 +22,7 @@ namespace kojilan_pacman
         public Direction after_direction;
         public bool finish_game = false; 
 
-            Game_controller(pacman_map Map,Form1 Form1, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
+           public Game_controller(pacman_map Map,Form1 Form1, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
         {
             map = Map;
             form1 = Form1;
