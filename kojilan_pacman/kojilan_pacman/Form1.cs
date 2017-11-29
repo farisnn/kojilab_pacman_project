@@ -11,13 +11,14 @@ using System.Drawing;
 
 namespace kojilan_pacman
 {
-    //public Form1()
-    //{
-    //    InitializeComponent();
-    //}
+    
 
     public partial class Form1 : Form
     {
+        public Form1()
+        {
+            InitializeComponent();
+        }
         private List<List<int>> map = new List<List<int>>();
 
         private void DrawImage(Image prm_img, int x, int y)
@@ -48,6 +49,8 @@ namespace kojilan_pacman
         private int state2;
         private int state3;
         private int state4;
+        private int score;
+        private bool cheak;
         public void draw_map(pacman_map map_data)
         {
 
@@ -61,17 +64,19 @@ namespace kojilan_pacman
             this.state2 = map_data.Enemy2_state;
             this.state3 = map_data.Enemy3_state;
             this.state4 = map_data.Enemy4_state;
-
-            Bitmap img1 = new Bitmap(@"C:\image\test0.png");    //道
-            Bitmap img2 = new Bitmap(@"C:\image\test1.png");    //餌ありの道
-            Bitmap img3 = new Bitmap(@"C:\image\test2.png");    //壁
-            Bitmap img4 = new Bitmap(@"C:\image\test4.png");    //パワー餌
-            Bitmap pacman = new Bitmap(@"C:\image\test1.jpg");    //pacman
-            Bitmap bule = new Bitmap(@"C:\image\test3.jpg");    //アオスケ
-            Bitmap red = new Bitmap(@"C:\image\test4.jpg");    //アカべイ
-            Bitmap pink = new Bitmap(@"C:\image\test5.jpg");    //ピンキー
-            Bitmap orange = new Bitmap(@"C:\image\test6.jpg");//グズタ
-            Bitmap weak = new Bitmap(@"C:\image\tes7.jpg");//弱体中の敵
+            this.time = map_data.Rest_turn;
+            this.cheak = map_data.check_finish();
+            this.score = map_data.announce_score();
+            Bitmap img1 = new Bitmap(@"../../image/test0.png");    //道
+            Bitmap img2 = new Bitmap(@"../../image\test1.png");    //餌ありの道
+            Bitmap img3 = new Bitmap(@"../../image\test2.png");    //壁
+            Bitmap img4 = new Bitmap(@"../../image\test4.png");    //パワー餌
+            Bitmap pacman = new Bitmap(@"../../image\test1.jpg");    //pacman
+            Bitmap bule = new Bitmap(@"../../image\test3.jpg");    //アオスケ
+            Bitmap red = new Bitmap(@"../../image\test4.jpg");    //アカべイ
+            Bitmap pink = new Bitmap(@"../../image\test5.jpg");    //ピンキー
+            Bitmap orange = new Bitmap(@"../../image\test6.jpg");//グズタ
+            Bitmap weak = new Bitmap(@"../../image\test7.jpg");//弱体中の敵
             
             
             //描画判断（map）
@@ -97,7 +102,8 @@ namespace kojilan_pacman
                     }
                 }
             }
-            
+            label1.Text =score.ToString();
+            label4.Text = time.ToString();
             DrawImage(pacman, 25 * pacman_location.X, 25 * pacman_location.Y);
             DrawImage(bule, 25 * enemy1_location.X, 25 * enemy1_location.Y);
             DrawImage(red, 25 * enemy2_location.X, 25 * enemy2_location.Y);
@@ -106,6 +112,13 @@ namespace kojilan_pacman
 
         }
         private void button1_Click(object sender, EventArgs e)
+        {
+            Game_controller game = new Game_controller(new pacman_map(),this , new pacman(), new enemy1(), new enemy2(), new enemy3 (),new enemy4 ());
+
+            game.start_game();
+        }
+
+        private void label1_Click(object sender, EventArgs e)
         {
 
         }

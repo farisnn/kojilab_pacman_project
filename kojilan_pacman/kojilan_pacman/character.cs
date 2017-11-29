@@ -145,7 +145,7 @@ namespace kojilan_pacman
                 if (map.get_map_data()[check_point.Y + 1][check_point.X] != 2)//壁じゃなければ子ノードとして追加
                 {
                     point_exist = false;
-                    Point current_point = new Point(check_point.X, check_point.Y + 1);//子ノードの自分の座標
+                    Point current_point = new Point(check_point.X, check_point.Y+1);//子ノードの自分の座標
                     foreach (point_info i in checked_list)//がぶっているかをチェック。
                     {
                         if (i.current_point == current_point)
@@ -163,7 +163,7 @@ namespace kojilan_pacman
                 if (map.get_map_data()[check_point.Y - 1][check_point.X] != 2)
                 {
                     point_exist = false;
-                    Point current_point = new Point(check_point.X, check_point.Y - 1 );//子ノードの自分の座標
+                    Point current_point = new Point(check_point.X, check_point.Y-1);//子ノードの自分の座標
                     foreach (point_info i in checked_list)//がぶっているかをチェック。
                     {
                         if (i.current_point == current_point)
@@ -180,7 +180,7 @@ namespace kojilan_pacman
                 if (map.get_map_data()[check_point.Y][check_point.X + 1] != 2)
                 {
                     point_exist = false;
-                    Point current_point = new Point(check_point.X, check_point.Y + 1);//子ノードの自分の座標
+                    Point current_point = new Point(check_point.X+1, check_point.Y );//子ノードの自分の座標
                     foreach (point_info i in checked_list)//がぶっているかをチェック。
                     {
                         if (i.current_point == current_point)
@@ -197,7 +197,7 @@ namespace kojilan_pacman
                 if (map.get_map_data()[check_point.Y][check_point.X - 1] != 2)
                 {
                     point_exist = false;
-                    Point current_point = new Point(check_point.X, check_point.Y + 1);//子ノードの自分の座標
+                    Point current_point = new Point(check_point.X-1, check_point.Y );//子ノードの自分の座標
                     foreach (point_info i in checked_list)//がぶっているかをチェック。
                     {
                         if (i.current_point == current_point)
@@ -276,7 +276,7 @@ namespace kojilan_pacman
                     infront_location.Y++;
                     reverse_direction = Direction_def.down;
                     own_left = new Point(map.Enemy1_location.X-1,map.Enemy1_location.Y);
-                    own_right = new Point(map.Enemy1_location.X+1,map.Enemy1_location.y);
+                    own_right = new Point(map.Enemy1_location.X+1,map.Enemy1_location.Y);
                     break;
                 case Direction_def.down:
                     infront_location.Y--;

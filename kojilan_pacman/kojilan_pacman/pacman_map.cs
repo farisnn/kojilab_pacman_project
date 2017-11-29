@@ -18,11 +18,11 @@ namespace kojilan_pacman
         public enum character_name { pacman,enemy1, enemy2, enemy3, enemy4};
 
         //初期座標の設定
-        private Point pacman_location = new Point(0, 0);
-        private Point enemy1_location = new Point(0, 0);
-        private Point enemy2_location = new Point(0, 0);
-        private Point enemy3_location = new Point(0, 0);
-        private Point enemy4_location = new Point(0, 0);
+        private Point pacman_location = new Point(9, 16);
+        private Point enemy1_location = new Point(9, 8);
+        private Point enemy2_location = new Point(9, 10);
+        private Point enemy3_location = new Point(9, 10);
+        private Point enemy4_location = new Point(9, 10);
 
 
 
@@ -45,8 +45,23 @@ namespace kojilan_pacman
         
         bool game_over = false;
 
+        //定数関連
+        private const int power_food_score = 100;//パワーエサ食べたときのスコア
+        private const int food_score = 10;//ノーマルエサを食べた時のスコア
+        private const int enemy_eat_score = 200;//敵を食べた時のスコア
+        private const int state_dutation = 5;//敵の弱体ターン数
+
 
         //ここら辺で変数を取れるアクセサを定義してます。
+
+
+        public Point Pacman_location
+        {
+            get
+            {
+               return pacman_location;
+            }
+        }
         public Point Enemy1_location
         {
             get
@@ -64,6 +79,8 @@ namespace kojilan_pacman
             }
 
         }
+
+
 
         public Point Enemy3_location
         {
@@ -179,6 +196,8 @@ namespace kojilan_pacman
             }
         }
 
+
+
         /// <summary>
         /// 現在のマップのデータを返す関数
         /// </summary>
@@ -214,7 +233,7 @@ namespace kojilan_pacman
         /// <summary>
         /// コンストラクタ。一応マップの定義はここでやってる
         /// </summary>
-        pacman_map()
+     public pacman_map()
         {
             map_data = new List<List<int>>();
             map_data.Add(new List<int>() { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
@@ -239,7 +258,7 @@ namespace kojilan_pacman
             map_data.Add(new List<int>() { 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
-
+            //とあるミスでここにアクセスするときだけYXの流れ。
 
 
 
@@ -296,7 +315,7 @@ namespace kojilan_pacman
 
             }
             //enemy4の更新
-            if (check_direction(pacman_location, map_data, pacman_direction))
+            if (check_direction(enemy4_location, map_data, pacman_direction))
             {
                 this.enemy4_direction = convert_direction(enemy4_direction);
                 move_charactor(character_name.enemy4, enemy4_location, enemy4_direction);
@@ -322,11 +341,10 @@ namespace kojilan_pacman
                     game_over = true;
                 else
                 {
-
-
-                    //敵の場所を戻す
-                    //スコアをなんとかする
-                    //ステートを0にする
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
                 }
 
             }
@@ -337,6 +355,14 @@ namespace kojilan_pacman
                 if (enemy2_state == 0)
                     game_over = true;
 
+                else
+                {
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
+                }
+
             }
             if (pacman_location.Equals(enemy3_location))
             {
@@ -344,6 +370,13 @@ namespace kojilan_pacman
 
                 if (enemy3_state == 0)
                     game_over = true;
+                else
+                {
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
+                }
 
             }
             if (pacman_location.Equals(enemy4_location))
@@ -352,19 +385,44 @@ namespace kojilan_pacman
                 //enemy4とヒットした時の処理
                 if (enemy4_state == 0)
                     game_over = true;
+                else
+                {
+                    enemy1_location.X = 9;
+                    enemy1_location.Y = 10;
+                    player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
+                    enemy1_state = 0;
+                }
 
             }
 
-// 3.移動後のパックマンの座標にアイテムがあった場合→player_scoreに加算
-// 4.パワー餌があった場合→敵キャラの全員のenemy_stateを設定
-//3.マップデータの書き換え(2の中で必要なタイミングでする感じかな)
 
-//1.マップの状態を更新
+            // 3.移動後のパックマンの座標にアイテムがあった場合→player_scoreに加算
+            // 4.パワー餌があった場合→敵キャラの全員のenemy_stateを設定
 
+            //パックマンがエサを食べる処理
+            if (map_data[pacman_location.Y][pacman_location.X] == 1)
+            {
 
+                player_score += food_score;//スコアの加算適当に10
+                map_data[pacman_location.Y][pacman_location.X] = 0;
 
+            }
+            //パワーエサを食べる処理
+            else if (map_data[pacman_location.Y][pacman_location.X] == 1)
+            {
 
+                player_score += power_food_score;//スコアの加算適当に10
+                //敵の状態の変更
+                enemy1_state = state_dutation;
+                enemy2_state = state_dutation;
+                enemy3_state = state_dutation;
+                enemy4_state = state_dutation;
+                //マップの書き換え
+                map_data[pacman_location.Y][pacman_location.X] = 0;
 
+            }
+
+            
             //残りターンを減らす。そして0になったらゲームオーバ－フラグをtrue
 
             rest_turn--;
@@ -388,18 +446,18 @@ namespace kojilan_pacman
 
                 case character.Direction_def.up:
 
-                    next_expect_position_status = map[point.X][point.Y -1];
+                    next_expect_position_status = map[point.Y -1][point.X];
 
                     break;
                 case character.Direction_def.down:
-                    next_expect_position_status = map[point.X][point.Y + 1];
+                    next_expect_position_status = map[point.Y + 1][point.X];
                     break;
                 case character.Direction_def.left:
-                    next_expect_position_status = map[point.X-1][point.Y];
+                    next_expect_position_status = map[point.Y][point.X - 1];
 
                     break;
                 case character.Direction_def.right:
-                    next_expect_position_status = map[point.X+1][point.Y];
+                    next_expect_position_status = map[point.Y][point.X+1];
                     break;
                 default:
                     

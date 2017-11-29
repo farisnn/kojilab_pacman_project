@@ -22,7 +22,7 @@ namespace kojilan_pacman
         public Direction after_direction;
         public bool finish_game = false; 
 
-            Game_controller(pacman_map Map,Form1 Form1, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
+           public Game_controller(pacman_map Map,Form1 Form1, pacman Pacman,enemy1 Enemy1,enemy2 Enemy2,enemy3 Enemy3,enemy4 Enemy4 )//コンストラクタの引数で他クラスのインスタンスを取得
         {
             map = Map;
             form1 = Form1;
@@ -48,7 +48,7 @@ namespace kojilan_pacman
             //ゲーム終了まではwhileをループ
             while (finish_game != true) {
                 List<character.Direction_def> all_direction = new List<character.Direction_def>();//キャラの動く方向を格納するリスト
-
+                load_initial_state();
                 //各キャラの動きをリストに追加
                 all_direction.Add(pacman.move(map));
                 all_direction.Add(enemy1.move(map));
@@ -57,7 +57,7 @@ namespace kojilan_pacman
                 all_direction.Add(enemy4.move(map));
 
                 //キャラの動きをマップクラスに渡して、マップデータを更新してもらう.
-                pacman_map.update_map_data(all_direction);
+                map.update_map_data(all_direction[0],all_direction[1],all_direction[2],all_direction[3],all_direction[4]);
 
 
                 //更新したマップデータに基づいて、画面上に描画
