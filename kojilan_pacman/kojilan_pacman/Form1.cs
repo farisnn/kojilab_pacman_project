@@ -105,19 +105,20 @@ namespace kojilan_pacman
             DrawImage(orange, 25 * enemy4_location.X, 25 * enemy4_location.Y);
 
         }
+        private void button1_Click(object sender, EventArgs e)
+        {
 
+        }
     }
+ 
 }
 
 
-     //   private Game_controller game_controlle;
+//   private Game_controller game_controlle;
 
 
-      
-        //private void button1_Click(object sender, EventArgs e)
-        //{
 
-        //}
-    
-    
+
+
+
 
