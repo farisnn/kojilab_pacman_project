@@ -57,7 +57,7 @@ namespace kojilan_pacman
                 all_direction.Add(enemy4.move(map));
 
                 //キャラの動きをマップクラスに渡して、マップデータを更新してもらう.
-                pacman_map.update_map_data(all_direction);
+                map.update_map_data(all_direction[0],all_direction[1],all_direction[2],all_direction[3],all_direction[4]);
 
 
                 //更新したマップデータに基づいて、画面上に描画

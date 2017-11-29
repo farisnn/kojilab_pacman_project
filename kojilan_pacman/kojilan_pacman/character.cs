@@ -276,7 +276,7 @@ namespace kojilan_pacman
                     infront_location.Y++;
                     reverse_direction = Direction_def.down;
                     own_left = new Point(map.Enemy1_location.X-1,map.Enemy1_location.Y);
-                    own_right = new Point(map.Enemy1_location.X+1,map.Enemy1_location.y);
+                    own_right = new Point(map.Enemy1_location.X+1,map.Enemy1_location.Y);
                     break;
                 case Direction_def.down:
                     infront_location.Y--;
