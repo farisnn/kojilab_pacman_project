@@ -52,10 +52,11 @@
     <Compile Include="Form1.Designer.cs">
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
-    <Compile Include="game_controller.cs" />
+    <Compile Include="Game_controller.cs" />
     <Compile Include="pacman_map.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="View.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
@@ -80,6 +81,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="image\test0.jpg" />
+    <Content Include="image\test0.png" />
+    <Content Include="image\test1.jpg" />
+    <Content Include="image\test1.png" />
+    <Content Include="image\test2.jpg" />
+    <Content Include="image\test2.png" />
+    <Content Include="image\test3.jpg" />
+    <Content Include="image\test3.png" />
+    <Content Include="image\test4.jpg" />
+    <Content Include="image\test4.png" />
+    <Content Include="image\test5.jpg" />
+    <Content Include="image\test6.jpg" />
+    <Content Include="image\test7.jpg" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
