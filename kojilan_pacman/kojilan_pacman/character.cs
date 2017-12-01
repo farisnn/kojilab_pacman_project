@@ -86,11 +86,64 @@ namespace kojilan_pacman
         public override Direction_def move(pacman_map map)
         {
 
-         
+            Point infront_location = map.Pacman_location;//一マス前の座標
+            Direction_def return_direction = Direction_def.up;//現時点での返す方向
+            Direction_def reverse_direction = Direction_def.up;//進行方向と逆向き
+
+
+            switch (map.Pacman_direction)//目の前の座標の取得と、進行方向と逆向きの取得
+            {
+                case pacman_map.map_direction_def.stop:
+                case pacman_map.map_direction_def.up:
+                    infront_location.Y++;
+                    reverse_direction = Direction_def.down;
+                    break;
+                case pacman_map.map_direction_def.down:
+                    infront_location.Y--;
+                    reverse_direction = Direction_def.up;
+                    break;
+                case pacman_map.map_direction_def.right:
+                    infront_location.X++;
+                    reverse_direction = Direction_def.left;
+                    break;
+                case pacman_map.map_direction_def.left:
+                    infront_location.X--;
+                    reverse_direction = Direction_def.right;
+                    break;
+            }
+            //ランダムに移動
+            Random random_number = new System.Random();
+            while (true)
+            {
+                // 0 以上 512 未満の乱数を取得する
+                int direction_number = random_number.Next(3);
+                if (direction_number == 0)
+                {
+                    return_direction = Direction_def.up;
+                }
+                else if (direction_number == 1)
+                {
+                    return_direction = Direction_def.down;
+                }
+                else if (direction_number == 1)
+                {
+                    return_direction = Direction_def.right;
+                }
+                else
+                {
+                    return_direction = Direction_def.left;
+                }
+
+                if (reverse_direction != return_direction)//後退は禁止
+                {
+                    break;
+                }
+            }
 
 
 
-            return Direction_def.right;
+
+            return return_direction;
         }
 
 
@@ -475,7 +528,22 @@ namespace kojilan_pacman
             else//曲がれるとこがない場合
             {
 
-                return_direction = current_direction;//直進
+                switch (map.Enemy1_direction)//目の前の座標の取得と、進行方向と逆向きの取得
+                {
+                    case pacman_map.map_direction_def.stop:
+                    case pacman_map.map_direction_def.up:
+                        return_direction = Direction_def.up;
+                        break;
+                    case pacman_map.map_direction_def.down:
+                        return_direction = Direction_def.down;
+                        break;
+                    case pacman_map.map_direction_def.right:
+                        return_direction = Direction_def.right;
+                        break;
+                    case pacman_map.map_direction_def.left:
+                        return_direction = Direction_def.left;
+                        break;
+                }
             }
         
             return return_direction;//返り値
