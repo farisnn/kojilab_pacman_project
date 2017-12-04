@@ -94,6 +94,7 @@
     <Content Include="image\test4.jpg" />
     <Content Include="image\test4.png" />
     <Content Include="image\test5.jpg" />
+    <Content Include="image\test5.png" />
     <Content Include="image\test6.jpg" />
     <Content Include="image\test7.jpg" />
   </ItemGroup>

@@ -71,14 +71,20 @@ namespace kojilan_pacman
             Bitmap img2 = new Bitmap(@"../../image\test1.png");    //餌ありの道
             Bitmap img3 = new Bitmap(@"../../image\test2.png");    //壁
             Bitmap img4 = new Bitmap(@"../../image\test4.png");    //パワー餌
-            Bitmap pacman = new Bitmap(@"../../image\test1.jpg");    //pacman
+            Bitmap pacman = new Bitmap(@"../../image\test5.png");    //pacman
             Bitmap bule = new Bitmap(@"../../image\test3.jpg");    //アオスケ
             Bitmap red = new Bitmap(@"../../image\test4.jpg");    //アカべイ
             Bitmap pink = new Bitmap(@"../../image\test5.jpg");    //ピンキー
             Bitmap orange = new Bitmap(@"../../image\test6.jpg");//グズタ
             Bitmap weak = new Bitmap(@"../../image\test7.jpg");//弱体中の敵
-            
-            
+            pacman.SetResolution(96.0F, 96.0F);
+            red.SetResolution(96.0F, 96.0F);
+            bule.SetResolution(96.0F, 96.0F);
+            pink.SetResolution(96.0F, 96.0F);
+            orange.SetResolution(96.0F, 96.0F);
+            weak.SetResolution(96.0F, 96.0F);
+
+
             //描画判断（map）
             for (int y = 0; y <= 21; y++)
             {
@@ -86,29 +92,29 @@ namespace kojilan_pacman
                 {
                     if (map[y][x] == 0)
                     {
-                        DrawImage(img1, 25 * x, 25 * y);
+                        DrawImage(img1, 20 * x, 20 * y);
                     }
                     if (map[y][x] == 1)
                     {
-                        DrawImage(img2, 25 * x, 25 * y);
+                        DrawImage(img2, 20 * x, 20 * y);
                     }
                     if (map[y][x] == 2)
                     {
-                        DrawImage(img3, 25 * x, 25 * y);
+                        DrawImage(img3, 20 * x, 20 * y);
                     }
                     if (map[y][x] == 3)
                     {
-                        DrawImage(img4, 25 * x, 25 * y);
+                        DrawImage(img4, 20 * x, 20 * y);
                     }
                 }
             }
             label2.Text =score.ToString();
             label4.Text = time.ToString();
-            DrawImage(pacman, 25 * pacman_location.X, 25 * pacman_location.Y);
-            DrawImage(bule, 25 * enemy1_location.X, 25 * enemy1_location.Y);
-            DrawImage(red, 25 * enemy2_location.X, 25 * enemy2_location.Y);
-            DrawImage(pink, 25 * enemy3_location.X, 25 * enemy3_location.Y);
-            DrawImage(orange, 25 * enemy4_location.X, 25 * enemy4_location.Y);
+            DrawImage(pacman, 20 * pacman_location.X, 20 * pacman_location.Y);
+            DrawImage(bule, 20 * enemy1_location.X, 20 * enemy1_location.Y);
+            DrawImage(red, 20 * enemy2_location.X, 20 * enemy2_location.Y);
+            DrawImage(pink, 20 * enemy3_location.X, 20 * enemy3_location.Y);
+            DrawImage(orange, 20 * enemy4_location.X, 20 * enemy4_location.Y);
 
         }
         private void button1_Click(object sender, EventArgs e)
