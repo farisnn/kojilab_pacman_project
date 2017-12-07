@@ -36,7 +36,7 @@ namespace kojilan_pacman
         private map_direction_def enemy4_direction = map_direction_def.stop;
 
         private int player_score = 0;
-        private int rest_turn = 100;
+        private int rest_turn = 1000;
         private int enemy1_state = 0;
         private int enemy2_state = 0;
         private int enemy3_state = 0;
@@ -239,14 +239,14 @@ namespace kojilan_pacman
             map_data.Add(new List<int>() { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 1, 1, 1, 1, 2, 1, 1, 1, 1, 1, 1, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2 });
-            map_data.Add(new List<int>() { 2, 1, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 1, 2 });
+            map_data.Add(new List<int>() { 2, 3, 2, 2, 1, 2, 2, 2, 1, 2, 1, 2, 2, 2, 1, 2, 2, 3, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 1, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 1, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 1, 2, 2, 2, 0, 2, 0, 2, 2, 2, 1, 2, 2, 2, 2 });
             map_data.Add(new List<int>() { 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 1, 2, 0, 2, 2, 0, 2, 2, 0, 2, 1, 2, 2, 2, 2 });
-            map_data.Add(new List<int>() { 2, 0, 0, 2, 1, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1, 2, 0, 0, 2 });
+            map_data.Add(new List<int>() { 2, 2, 2, 2, 1, 0, 0, 2, 0, 0, 0, 2, 0, 0, 1, 2, 2, 2, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 0, 2, 1, 2, 2, 2, 2 });
             map_data.Add(new List<int>() { 2, 0, 0, 2, 1, 2, 0, 0, 0, 0, 0, 0, 0, 2, 1, 2, 0, 0, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 1, 2, 0, 2, 2, 2, 2, 2, 0, 2, 1, 2, 2, 2, 2 });
@@ -255,7 +255,7 @@ namespace kojilan_pacman
             map_data.Add(new List<int>() { 2, 1, 1, 2, 1, 1, 1, 1, 1, 0, 1, 1, 1, 1, 1, 2, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 2, 1, 2, 1, 2, 1, 2, 2, 2, 2, 2, 1, 2, 1, 2, 1, 2, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 2, 1, 1, 1, 1, 2 });
-            map_data.Add(new List<int>() { 2, 1, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 1, 2 });
+            map_data.Add(new List<int>() { 2, 3, 2, 2, 2, 2, 2, 2, 1, 2, 1, 2, 2, 2, 2, 2, 2, 3, 2 });
             map_data.Add(new List<int>() { 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2 });
             map_data.Add(new List<int>() { 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2 });
             //とあるミスでここにアクセスするときだけYXの流れ。
@@ -315,7 +315,7 @@ namespace kojilan_pacman
 
             }
             //enemy4の更新
-            if (check_direction(enemy4_location, map_data, pacman_direction))
+            if (check_direction(enemy4_location, map_data, enemy4_direction))
             {
                 this.enemy4_direction = convert_direction(enemy4_direction);
                 move_charactor(character_name.enemy4, enemy4_location, enemy4_direction);
@@ -357,10 +357,10 @@ namespace kojilan_pacman
 
                 else
                 {
-                    enemy1_location.X = 9;
-                    enemy1_location.Y = 10;
+                    enemy2_location.X = 9;
+                    enemy2_location.Y = 10;
                     player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
-                    enemy1_state = 0;
+                    enemy2_state = 0;
                 }
 
             }
@@ -372,10 +372,10 @@ namespace kojilan_pacman
                     game_over = true;
                 else
                 {
-                    enemy1_location.X = 9;
-                    enemy1_location.Y = 10;
+                    enemy3_location.X = 9;
+                    enemy3_location.Y = 10;
                     player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
-                    enemy1_state = 0;
+                    enemy3_state = 0;
                 }
 
             }
@@ -387,10 +387,10 @@ namespace kojilan_pacman
                     game_over = true;
                 else
                 {
-                    enemy1_location.X = 9;
-                    enemy1_location.Y = 10;
+                    enemy4_location.X = 9;
+                    enemy4_location.Y = 10;
                     player_score += enemy_eat_score;//スコアをなんとかする暫定的にプラス200
-                    enemy1_state = 0;
+                    enemy4_state = 0;
                 }
 
             }
@@ -408,7 +408,7 @@ namespace kojilan_pacman
 
             }
             //パワーエサを食べる処理
-            else if (map_data[pacman_location.Y][pacman_location.X] == 1)
+            else if (map_data[pacman_location.Y][pacman_location.X] == 3)
             {
 
                 player_score += power_food_score;//スコアの加算適当に10
