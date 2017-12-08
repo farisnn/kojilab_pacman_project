@@ -110,11 +110,36 @@ namespace kojilan_pacman
             }
             label2.Text =score.ToString();
             label4.Text = time.ToString();
+            if(state1>0)
+            {
+                DrawImage(weak, 20 * enemy1_location.X, 20 * enemy1_location.Y);
+            }
+            else
+                DrawImage(bule, 20 * enemy1_location.X, 20 * enemy1_location.Y);
+
+            if (state2 > 0)
+            {
+                DrawImage(weak, 20 * enemy2_location.X, 20 * enemy2_location.Y);
+            }
+            else
+                DrawImage(red, 20 * enemy2_location.X, 20 * enemy2_location.Y);
+
+            if (state3 > 0)
+            {
+                DrawImage(weak, 20 * enemy3_location.X, 20 * enemy3_location.Y);
+            }
+            else
+                DrawImage(pink, 20 * enemy3_location.X, 20 * enemy3_location.Y);
+
+            if (state4 > 0)
+            {
+                DrawImage(weak, 20 * enemy4_location.X, 20 * enemy4_location.Y);
+            }
+            else
+                DrawImage(orange, 20 * enemy4_location.X, 20 * enemy4_location.Y);
+
             DrawImage(pacman, 20 * pacman_location.X, 20 * pacman_location.Y);
-            DrawImage(bule, 20 * enemy1_location.X, 20 * enemy1_location.Y);
-            DrawImage(red, 20 * enemy2_location.X, 20 * enemy2_location.Y);
-            DrawImage(pink, 20 * enemy3_location.X, 20 * enemy3_location.Y);
-            DrawImage(orange, 20 * enemy4_location.X, 20 * enemy4_location.Y);
+           
 
         }
         private void button1_Click(object sender, EventArgs e)
