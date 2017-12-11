@@ -780,7 +780,7 @@ namespace kojilan_pacman
             bool loop =true;
             Direction_def result = Direction_def.up;
 
-            Point infront_location = map.Enemy1_location;//一マス前の座標
+            Point infront_location = map.Enemy2_location;//一マス前の座標
             Direction_def return_direction = Direction_def.up;//現時点での返す方向
             Direction_def reverse_direction = Direction_def.up;//進行方向と逆向き
             Point own_left = new Point(0, 0);//自分から見て左
@@ -788,32 +788,32 @@ namespace kojilan_pacman
             List<Direction_def> direction_list = new List<Direction_def>();//進行方向の優先順位を決める
 
 
-            switch (map.Enemy1_direction)//目の前の座標の取得と、進行方向と逆向きの取得
+            switch (map.Enemy2_direction)//目の前の座標の取得と、進行方向と逆向きの取得
             {
                 case pacman_map.map_direction_def.stop:
                 case pacman_map.map_direction_def.up:
                     infront_location.Y++;
                     reverse_direction = Direction_def.down;
-                    own_left = new Point(map.Enemy1_location.X - 1, map.Enemy1_location.Y);
-                    own_right = new Point(map.Enemy1_location.X + 1, map.Enemy1_location.Y);
+                    own_left = new Point(map.Enemy2_location.X - 1, map.Enemy2_location.Y);
+                    own_right = new Point(map.Enemy2_location.X + 1, map.Enemy2_location.Y);
                     break;
                 case pacman_map.map_direction_def.down:
                     infront_location.Y--;
                     reverse_direction = Direction_def.up;
-                    own_left = new Point(map.Enemy1_location.X + 1, map.Enemy1_location.Y);
-                    own_right = new Point(map.Enemy1_location.X - 1, map.Enemy1_location.Y);
+                    own_left = new Point(map.Enemy2_location.X + 1, map.Enemy2_location.Y);
+                    own_right = new Point(map.Enemy2_location.X - 1, map.Enemy2_location.Y);
                     break;
                 case pacman_map.map_direction_def.right:
                     infront_location.X++;
                     reverse_direction = Direction_def.left;
-                    own_left = new Point(map.Enemy1_location.X, map.Enemy1_location.Y - 1);
-                    own_right = new Point(map.Enemy1_location.X, map.Enemy1_location.Y + 1);
+                    own_left = new Point(map.Enemy2_location.X, map.Enemy2_location.Y - 1);
+                    own_right = new Point(map.Enemy2_location.X, map.Enemy2_location.Y + 1);
                     break;
                 case pacman_map.map_direction_def.left:
                     infront_location.X--;
                     reverse_direction = Direction_def.right;
-                    own_left = new Point(map.Enemy1_location.X, map.Enemy1_location.Y + 1);
-                    own_right = new Point(map.Enemy1_location.X, map.Enemy1_location.Y - 1);
+                    own_left = new Point(map.Enemy2_location.X, map.Enemy2_location.Y + 1);
+                    own_right = new Point(map.Enemy2_location.X, map.Enemy2_location.Y - 1);
                     break;
             }
 
@@ -823,6 +823,8 @@ namespace kojilan_pacman
                 if (this.status == status_def.nomal)//通常時(パックマンの座標を目指す)
                 {
 
+
+                    //本来目指すべき座標（enemy1のパックマンに対する点対称）
                     next_pos.X = 2 * map.Pacman_location.X - map.Enemy1_location.X;
                     next_pos.Y = 2 * map.Pacman_location.Y - map.Enemy1_location.Y;
 
@@ -831,12 +833,19 @@ namespace kojilan_pacman
 
                         if (next_pos.X > map.get_map_data()[0].Count - 1)
                         {
-                            next_pos.X = map.get_map_data()[0].Count - 2;
+
+                            double rate = next_pos.X / (map.get_map_data()[0].Count - 1);
+                            next_pos.X = (int)(next_pos.X/rate);
+                            next_pos.Y = (int)(next_pos.Y / rate);
+                            
+                            //next_pos.X = map.get_map_data()[0].Count - 2;
 
                         }
                         if (next_pos.Y > map.get_map_data().Count - 1)
                         {
-                            next_pos.Y = map.get_map_data().Count - 2;
+                            double rate = next_pos.Y / (map.get_map_data().Count - 1);
+                            next_pos.X = (int)(next_pos.X / rate);
+                            next_pos.Y = (int)(next_pos.Y / rate);
 
                         }
                         if (next_pos.Y < 1)
@@ -884,11 +893,11 @@ namespace kojilan_pacman
 
                 else if (this.status == status_def.ijike)//いじけ状態のとき
                 {
-                    if (map.Enemy1_location.Y == 4 && map.Enemy1_location.X == 14)//右上の真ん中を通るとき、あえて直進させて大きめに回らせる
-                    {
-                        return_direction = current_direction;
-                    }
-                    else//基本的に右上を徘徊する。決まった目的地はないため、４方向に優先順位を与えるアルゴリズムをとる。
+                    //if (map.Enemy2_location.Y == 4 && map.Enemy1_location.X == 14)//右上の真ん中を通るとき、あえて直進させて大きめに回らせる
+                    //{
+                    //    return_direction = current_direction;
+                    //}
+                    //else//基本的に右上を徘徊する。決まった目的地はないため、４方向に優先順位を与えるアルゴリズムをとる。
                     {
                         Point destination_distance = new Point(17 - map.Enemy1_location.X, 20 - map.Enemy1_location.Y);//右上の座標（右上を徘徊するために設定した目的地）と自分の距離
                         if (System.Math.Abs(destination_distance.X) > System.Math.Abs(destination_distance.Y))//目的地にｙ軸のほうが近い場合(このときｙ、ｘ、ｙ、ｘ、の順番が優先順位になる)
@@ -975,7 +984,7 @@ namespace kojilan_pacman
                         {
                             if (direction_list[i] == Direction_def.down)
                             {
-                                if (map.get_map_data()[map.Enemy1_location.Y + 1][map.Enemy1_location.X] != 2)
+                                if (map.get_map_data()[map.Enemy2_location.Y + 1][map.Enemy2_location.X] != 2)
                                 {
                                     return_direction = Direction_def.down;
                                     break;
@@ -983,7 +992,7 @@ namespace kojilan_pacman
                             }
                             else if (direction_list[i] == Direction_def.up)
                             {
-                                if (map.get_map_data()[map.Enemy1_location.Y - 1][map.Enemy1_location.X] != 2)
+                                if (map.get_map_data()[map.Enemy2_location.Y - 1][map.Enemy2_location.X] != 2)
                                 {
                                     return_direction = Direction_def.up;
                                     break;
@@ -991,7 +1000,7 @@ namespace kojilan_pacman
                             }
                             else if (direction_list[i] == Direction_def.right)
                             {
-                                if (map.get_map_data()[map.Enemy1_location.Y][map.Enemy1_location.X + 1] != 2)
+                                if (map.get_map_data()[map.Enemy2_location.Y][map.Enemy2_location.X + 1] != 2)
                                 {
                                     return_direction = Direction_def.right;
                                     break;
@@ -999,7 +1008,7 @@ namespace kojilan_pacman
                             }
                             else if (direction_list[i] == Direction_def.left)
                             {
-                                if (map.get_map_data()[map.Enemy1_location.Y][map.Enemy1_location.X - 1] != 2)
+                                if (map.get_map_data()[map.Enemy2_location.Y][map.Enemy2_location.X - 1] != 2)
                                 {
                                     return_direction = Direction_def.left;
                                     break;
@@ -1043,25 +1052,25 @@ namespace kojilan_pacman
                             switch (return_direction)//目の前の座標の取得と、進行方向と逆向きの取得
                             {
                                 case Direction_def.up:
-                                    if (map.get_map_data()[map.Enemy1_location.Y - 1][map.Enemy1_location.X] != 2)
+                                    if (map.get_map_data()[map.Enemy2_location.Y - 1][map.Enemy2_location.X] != 2)
                                     {
                                         finish_roop = true;
                                     }
                                     break;
                                 case Direction_def.down:
-                                    if (map.get_map_data()[map.Enemy1_location.Y + 1][map.Enemy1_location.X] != 2)
+                                    if (map.get_map_data()[map.Enemy2_location.Y + 1][map.Enemy2_location.X] != 2)
                                     {
                                         finish_roop = true;
                                     }
                                     break;
                                 case Direction_def.right:
-                                    if (map.get_map_data()[map.Enemy1_location.Y][map.Enemy1_location.X + 1] != 2)
+                                    if (map.get_map_data()[map.Enemy2_location.Y][map.Enemy2_location.X + 1] != 2)
                                     {
                                         finish_roop = true;
                                     }
                                     break;
                                 case Direction_def.left:
-                                    if (map.get_map_data()[map.Enemy1_location.Y][map.Enemy1_location.X - 1] != 2)
+                                    if (map.get_map_data()[map.Enemy2_location.Y][map.Enemy2_location.X - 1] != 2)
                                     {
                                         finish_roop = true;
                                     }
@@ -1079,7 +1088,7 @@ namespace kojilan_pacman
             else//曲がれるとこがない場合
             {
 
-                switch (map.Enemy1_direction)//目の前の座標の取得と、進行方向と逆向きの取得
+                switch (map.Enemy2_direction)//目の前の座標の取得と、進行方向と逆向きの取得
                 {
                     case pacman_map.map_direction_def.stop:
                     case pacman_map.map_direction_def.up:
@@ -1096,7 +1105,7 @@ namespace kojilan_pacman
                         break;
                 }
             }
-            return result;
+            return return_direction;
         }
 
     }

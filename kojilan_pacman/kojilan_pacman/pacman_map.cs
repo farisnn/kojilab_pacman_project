@@ -422,12 +422,29 @@ namespace kojilan_pacman
 
             }
 
-            
+
+            //パワーエサの有効ターンを一つ減らす
+
+            if (enemy1_state > 0)
+                enemy1_state--;
+            if (enemy2_state > 0)
+                enemy2_state--;
+            if (enemy3_state > 0)
+                enemy3_state--;
+            if (enemy4_state > 0)
+                enemy4_state--;
+
+
+
             //残りターンを減らす。そして0になったらゲームオーバ－フラグをtrue
 
             rest_turn--;
             if (rest_turn == 0)
                 game_over = true;
+
+            //デバッグ用スリーパー
+            //System.Threading.Thread.Sleep(500);
+            
              
         }
 
