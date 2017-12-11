@@ -21,7 +21,7 @@ namespace kojilan_pacman
         ///今自分自身の向いている方向を示す
         /// </summary>
         protected Direction_def current_direction;
-
+        public Direction_def start;
 
         /// <summary>
         /// マップなどを入れて進行方向を変えす関数
@@ -1311,83 +1311,101 @@ namespace kojilan_pacman
                 {
                     next_pos3.X = map.Pacman_location.X;//現在のパックマンの座標
                     next_pos3.Y = map.Pacman_location.Y;//現在のパックマンの座標
-                    
+                    int dic = 0;
                     //ここから↓　パックマンの三手先の座標予想
-                    if (map.Pacman_direction== pacman_map.map_direction_def.down)
+                    if (map.Pacman_direction == pacman_map.map_direction_def.down)
                     {
-                        for (int t = 0; t < 3; t++)
+                        dic = 0;
+                    }
+                    if (map.Pacman_direction == pacman_map.map_direction_def.up)
+                    {
+                        dic = 1;
+                    }
+                    if (map.Pacman_direction == pacman_map.map_direction_def.left)
+                    {
+                        dic = 2;
+                    }
+                    if (map.Pacman_direction == pacman_map.map_direction_def.right)
+                    {
+                        dic = 3;
+                    }
+                    for(int t = 0; t < 3; t++) {  
+                    if (dic == 0)
+                    {
+
+                        if (map.get_map_data()[next_pos3.Y][next_pos3.X - 1] != 2)//分岐点の時
                         {
-                            if (map.get_map_data()[next_pos3.Y][next_pos3.X - 1] != 2 )//分岐点の時
+                            if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//左右空
                             {
-                                if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//左右空
-                                {
-                                    Random r = new Random();
-                                    int t1 = r.Next(1);
-                                    if (t1==0)
-                                    {
-                                        next_pos3.X-=1;//左へ
-                                    }
-                                    else
-                                    {
-                                        next_pos3.X += 1;//右へ
-                                    }
-                                }
-                                else//左空
+                                Random r = new Random();
+                                int t1 = r.Next(1);
+                                if (t1 == 0)
                                 {
                                     next_pos3.X -= 1;//左へ
+                                    dic = 2;
+                                }
+                                else
+                                {
+
+                                    next_pos3.X += 1;//右へ
+                                    dic = 3;
                                 }
                             }
-                            else if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//右空
+                            else//左空
                             {
-                                next_pos3.X += 1;//右へ
+                                next_pos3.X -= 1;//左へ
+                                dic = 2;
                             }
-                            else//直進時
-                            {
-                                next_pos3.Y += 1;
-                            }
+                        }
+                        else if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//右空
+                        {
+                            next_pos3.X += 1;//右へ
+                        }
+                        else//直進時
+                        {
+                            next_pos3.Y += 1;
                         }
                     }
 
-                    else if (map.Pacman_direction == pacman_map.map_direction_def.up)
+
+                    else if (dic == 1)
                     {
-                        for (int t = 0; t < 3; t++)
+                        if (map.get_map_data()[next_pos3.Y][next_pos3.X - 1] != 2)//分岐点の時
                         {
-                            if (map.get_map_data()[next_pos3.Y][next_pos3.X - 1] != 2)//分岐点の時
+                            if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//左右空
                             {
-                                if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//左右空
-                                {
-                                    Random r = new Random();
-                                    int t1 = r.Next(1);
-                                    if (t1 == 0)
-                                    {
-                                        next_pos3.X -= 1;//左へ
-                                    }
-                                    else
-                                    {
-                                        next_pos3.X += 1;//右へ
-                                    }
-                                }
-                                else//左空
+                                Random r = new Random();
+                                int t1 = r.Next(1);
+                                if (t1 == 0)
                                 {
                                     next_pos3.X -= 1;//左へ
+                                    dic = 2;
+                                }
+                                else
+                                {
+                                    next_pos3.X += 1;//右へ
+                                    dic = 3;
                                 }
                             }
-                            else if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//右空
+                            else//左空
                             {
-                                next_pos3.X += 1;//右へ
-                            }
-                            else//直進時
-                            {
-                                next_pos3.Y -= 1;
+                                next_pos3.X -= 1;//左へ
+                                dic = 2;
                             }
                         }
-                     
+                        else if (map.get_map_data()[next_pos3.Y][next_pos3.X + 1] != 2)//右空
+                        {
+                            next_pos3.X += 1;//右へ
+                            dic = 3;
+                        }
+                        else//直進時
+                        {
+                            next_pos3.Y -= 1;
+                        }
                     }
 
-                    else if (map.Pacman_direction == pacman_map.map_direction_def.right)
+                    if (dic == 3)
                     {
-                        for (int t = 0; t < 3; t++)
-                        {
                             if (map.get_map_data()[next_pos3.Y + 1][next_pos3.X] != 2)//分岐点の時
                             {
                                 if (map.get_map_data()[next_pos3.Y - 1][next_pos3.X] != 2)//上下空
@@ -1397,69 +1415,74 @@ namespace kojilan_pacman
                                     if (t1 == 0)
                                     {
                                         next_pos3.Y -= 1;//上へ
+                                        dic = 1;
                                     }
                                     else
                                     {
                                         next_pos3.Y += 1;//下へ
+                                        dic = 0;
                                     }
                                 }
                                 else//下空
                                 {
                                     next_pos3.Y += 1;//下へ
-                                }
-                            }
-                            else if (map.get_map_data()[next_pos3.Y - 1][next_pos3.X ] != 2)//上空
-                            {
-                                next_pos3.Y -= 1;//上へ
-                            }
-                            else//直進時
-                            {
-                                next_pos3.X+= 1;
-                            }
-                        }
-                    }
+                                    dic = 0;
 
-         
-                    else if (map.Pacman_direction == pacman_map.map_direction_def.left)
-                    {
-                        for (int t = 0; t < 3; t++)
-                        {
-                            if (map.get_map_data()[next_pos3.Y + 1][next_pos3.X] != 2)//分岐点の時
-                            {
-                                if (map.get_map_data()[next_pos3.Y - 1][next_pos3.X] != 2)//上下空
-                                {
-                                    Random r = new Random();
-                                    int t1 = r.Next(1);
-                                    if (t1 == 0)
-                                    {
-                                        next_pos3.Y -= 1;//上へ
-                                    }
-                                    else
-                                    {
-                                        next_pos3.Y += 1;//下へ
-                                    }
-                                }
-                                else//上空
-                                {
-                                    next_pos3.Y += 1;//下へ
                                 }
                             }
                             else if (map.get_map_data()[next_pos3.Y - 1][next_pos3.X] != 2)//上空
                             {
-                                next_pos3.Y -= 1;//へ
+                                next_pos3.Y -= 1;//上へ
+                                dic = 1;
                             }
                             else//直進時
                             {
-                                next_pos3.X -= 1;
+                                next_pos3.X += 1;
                             }
                         }
+                    
+                    else if (dic == 2)
+                    {
+                        if (map.get_map_data()[next_pos3.Y + 1][next_pos3.X] != 2)//分岐点の時
+                        {
+                            if (map.get_map_data()[next_pos3.Y - 1][next_pos3.X] != 2)//上下空
+                            {
+                                Random r = new Random();
+                                int t1 = r.Next(1);
+                                if (t1 == 0)
+                                {
+                                    next_pos3.Y -= 1;//上へ
+                                    dic = 1;
+                                }
+                                else
+                                {
+                                    dic = 0;
+                                    next_pos3.Y += 1;//下へ
+                                }
+                            }
+                            else//上空
+                            {
+                                next_pos3.Y += 1;//下へ
+                                dic = 0;
+                            }
+                        }
+                        else if (map.get_map_data()[next_pos3.Y - 1][next_pos3.X] != 2)//上空
+                        {
+                            next_pos3.Y -= 1;//へ
+                            dic = 1;
+                        }
+                        else//直進時
+                        {
+                            next_pos3.X -= 1;
+                        }
+
                     }
 
                     else
                     {
 
                     }
-
+                }
 
                     try
                     {
