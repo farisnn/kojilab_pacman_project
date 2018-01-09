@@ -273,8 +273,13 @@ namespace kojilan_pacman
             //パックマンの更新
             if(check_direction(pacman_location, map_data, pacman_direction))
             {
-                this.pacman_direction = convert_direction(pacman_direction);
-                move_charactor(character_name.pacman, pacman_location, pacman_direction);
+                if (pacman_direction == character.Direction_def.down && pacman_location.Equals(new Point(9, 8)))
+                    this.pacman_direction = map_direction_def.stop;
+                else
+                {
+                    this.pacman_direction = convert_direction(pacman_direction);
+                    move_charactor(character_name.pacman, pacman_location, pacman_direction);
+                }
             }
             else
             {
@@ -424,7 +429,6 @@ namespace kojilan_pacman
 
 
             //パワーエサの有効ターンを一つ減らす
-
             if (enemy1_state > 0)
                 enemy1_state--;
             if (enemy2_state > 0)
@@ -433,6 +437,13 @@ namespace kojilan_pacman
                 enemy3_state--;
             if (enemy4_state > 0)
                 enemy4_state--;
+
+
+
+
+            //クリア判定
+            if (map_clear_judge())
+                game_over = true;
 
 
 
@@ -569,7 +580,20 @@ namespace kojilan_pacman
         }
 
 
+        private bool map_clear_judge()
+        {
+            foreach(List<int> a in map_data)
+            {
+                foreach(int b in a)
+                {
+                    if (b == 1 || b == 3)
+                        return false;
+                }
 
+            }
+
+            return true;
+        }
 
 
 

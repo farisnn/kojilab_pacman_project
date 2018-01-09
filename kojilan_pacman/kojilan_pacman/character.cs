@@ -63,124 +63,7 @@ namespace kojilan_pacman
 
     }
 
-    public class pacman : character
-    {
-        //パックマンに固有の情報はこっちに
-        public enum status_def {nomal, strong}
-        status_def status;
-
-
-
-        public pacman()
-        {
-           
-
-            
-        }
-/// <summary>
-/// ここにパックマンの移動を定義します。ここをオーバーライドして自前の探索を行ってください
-/// </summary>
-/// <param name="map">マップの二次元配列</param>
-/// <param name="position">パックマンとかの位置？</param>
-/// <returns></returns>
-        public override Direction_def move(pacman_map map)
-        {
-
-            Point infront_location = map.Pacman_location;//一マス前の座標
-            Direction_def return_direction = Direction_def.up;//現時点での返す方向
-            Direction_def reverse_direction = Direction_def.up;//進行方向と逆向き
-
-
-            switch (map.Pacman_direction)//目の前の座標の取得と、進行方向と逆向きの取得
-            {
-                case pacman_map.map_direction_def.stop:
-                case pacman_map.map_direction_def.up:
-                    infront_location.Y++;
-                    reverse_direction = Direction_def.down;
-                    break;
-                case pacman_map.map_direction_def.down:
-                    infront_location.Y--;
-                    reverse_direction = Direction_def.up;
-                    break;
-                case pacman_map.map_direction_def.right:
-                    infront_location.X++;
-                    reverse_direction = Direction_def.left;
-                    break;
-                case pacman_map.map_direction_def.left:
-                    infront_location.X--;
-                    reverse_direction = Direction_def.right;
-                    break;
-            }
-            //ランダムに移動
-            Random random_number = new System.Random();
-            bool finish_roop = false;
-            while (true)
-            {
-                // 0 以上 512 未満の乱数を取得する
-                int direction_number = random_number.Next(4);
-                if (direction_number == 0)
-                {
-                    return_direction = Direction_def.up;
-                }
-                else if (direction_number == 1)
-                {
-                    return_direction = Direction_def.down;
-                }
-                else if (direction_number == 2)
-                {
-                    return_direction = Direction_def.right;
-                }
-                else
-                {
-                    return_direction = Direction_def.left;
-                }
-
-                if (reverse_direction != return_direction)//後退は禁止
-                {
-                    switch (return_direction)//目の前の座標の取得と、進行方向と逆向きの取得
-                    {
-                        case Direction_def.up:
-                            if (map.get_map_data()[map.Pacman_location.Y - 1][map.Pacman_location.X] != 2)
-                            {
-                                finish_roop = true;
-                            }
-                            break;
-                        case Direction_def.down:
-                            if (map.get_map_data()[map.Pacman_location.Y + 1][map.Pacman_location.X] != 2)
-                            {
-                                finish_roop = true;
-                            }
-                            break;
-                        case Direction_def.right:
-                            if (map.get_map_data()[map.Pacman_location.Y][map.Pacman_location.X + 1] != 2)
-                            {
-                                finish_roop = true;
-                            }
-                            break;
-                        case Direction_def.left:
-                            if (map.get_map_data()[map.Pacman_location.Y][map.Pacman_location.X - 1] != 2)
-                            {
-                                finish_roop = true;
-                            }
-                            break;
-                    }
-                    if (finish_roop == true)
-                    {
-                        break;
-                    }
-                }
-            }
-
-
-
-
-            return return_direction;
-        }
-
-
-
-
-    }
+    
 
     /// <summary>
     /// アカベイ的なものの実装
@@ -827,10 +710,11 @@ namespace kojilan_pacman
                     //本来目指すべき座標（enemy1のパックマンに対する点対称）
                     next_pos.X = 2 * map.Pacman_location.X - map.Enemy1_location.X;
                     next_pos.Y = 2 * map.Pacman_location.Y - map.Enemy1_location.Y;
+                    Point origin_next = next_pos;
+                    int loop_count = 1;
 
                     while (loop)
                     {
-
                         if (next_pos.X > map.get_map_data()[0].Count - 1)
                         {
 
@@ -869,17 +753,71 @@ namespace kojilan_pacman
                         }
                         catch
                         {
-                            Random r = new Random();
-                            int t = r.Next(4);
-                            if (t == 0)
-                                next_pos.Y--;
-                            else if (t == 1)
-                                next_pos.Y++;
-                            else if (t == 2)
-                                next_pos.X--;
-                            else
-                                next_pos.X++;
+                            //if(loop_count == 1)
+                            //{
+                            //    next_pos.X--;
+                            //    next_pos.Y--;
 
+                            //}
+                            //else if(loop_count % 3 == 0)
+                            //{
+                            //    next_pos.X = next_pos.X - 2;
+                            //    next_pos.Y++;
+                                
+
+                            //}
+                            //else
+                            //{
+                            //    next_pos.X++;
+
+                            //}
+
+
+
+
+                            
+
+                            loop_count++;
+
+
+
+
+                            //Random r = new Random();
+                            //int t = r.Next(4);
+                            //if (t == 0)
+                            //{
+                            //    next_pos.X = 1;
+                            //    next_pos.Y = 1;
+                            //}
+                            //else if (t == 1)
+                            //{
+                            //    next_pos.X = 1;
+                            //    next_pos.Y = 20;
+                            //}
+
+                            //else if (t == 2)
+                            //{
+                            //    next_pos.X = 17;
+                            //    next_pos.Y = 1;
+                            //}
+                            //else
+                            //{
+                            //    next_pos.X = 17;
+                            //    next_pos.Y = 20;
+                            //}
+
+
+
+                            if (map.Enemy2_location.X == 17 && map.Enemy2_location.Y == 20)
+                            {
+                                next_pos.X = 10;
+                                next_pos.Y = 14;
+                            }
+                            else
+                            {
+                                next_pos.X = 17;
+                                next_pos.Y = 20;
+                            }
                             loop = true;
 
                         }
